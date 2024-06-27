@@ -6,14 +6,14 @@
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
     }],
     "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/staticfiles/$1"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "GroundZero/wsgi.py"
-      }
+        {
+            "src": "/(.*)",
+            "dest": "GroundZero/wsgi.py"
+        },
+        {
+          "src": "/static/(.*)",
+          "dest": "/staticfiles/$1"
+        }
     ]
   }
   
