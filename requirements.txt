@@ -12,3 +12,4 @@ django-simple-captcha
 django-recaptcha
 django-multi-captcha-admin
 reportlab
+whitenoise
