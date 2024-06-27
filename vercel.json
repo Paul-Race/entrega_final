@@ -4,8 +4,14 @@
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.12.3" }
     }],
-    "routes": [{
-        "src": "/(.*)",
-        "dest": "GroundZero/wsgi.py"
-    }]
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "GroundZero/wsgi.py"
+        }
+    ]
 }
