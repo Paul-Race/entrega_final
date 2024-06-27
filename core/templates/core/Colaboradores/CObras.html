@@ -1,0 +1,84 @@
+{% extends 'core/Colaboradores/layout_crud.html' %}
+{% block body %}
+
+    <div class="container">
+        <h1 class="text-center my-2" style="border-bottom: 1px solid black;">Crear obra</h1>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {% load crispy_forms_tags %}
+                <form action="" method="post" enctype="multipart/form-data">
+                  {%csrf_token%}
+                <table>
+                  {{ form | crispy }}
+                  <input class="btn btn-primary my-2" type="submit" value="Guardar">
+                </table>
+                <h5>{{ msj }}</h5>
+            </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <div class="modal" id="Contacto">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Contacta a soporte</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Person</span>
+                        <input type="text" class="form-control" placeholder="First Name">
+                        <input type="text" class="form-control" placeholder="Last Name">
+                      </div>
+                    <div class="mb-3 mt-3">
+                      <label for="email" class="form-label">Email:</label>
+                      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                    </div>
+                    <label for="comment">Comments:</label>
+                    <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                  </form>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+    {% for x in obras %}
+    {% if x.mensaje %} 
+      <div class="modal fade" id="advertencia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Su obra {{x.titulo}} de id {{x.id}} se a rechazado</h1>
+            </div>
+            <div class="modal-body">
+              <p>El motivo es: {{x.mensaje}}</p>
+            </div>
+            <div class="modal-footer">
+              <a type="button" class="btn btn-success" href="{% url 'msjLeido' x.id %}">Entendido</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <script>
+        $(document).ready(function(){
+          $('#advertencia').modal('show');
+        });
+      </script>
+{% endblock %}

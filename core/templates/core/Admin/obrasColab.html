@@ -1,0 +1,99 @@
+{% extends 'core/Admin/layout_base_admin.html' %}
+{% block body %}
+    <div class="container mt-3 pb-3">
+        <h1 class="text-center my-2">Obras de {{ colab.first_name }} {{ colab.last_name }}</h1>   
+        <div class="table-responsive"> 
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr class="text-center">
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Tecnica</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <style>
+                td{
+                  vertical-align : middle;
+                }
+              </style>
+              {% for x in obras %}
+              <tr>
+                <td><img width="100px" src="{{x.imagen.url}}"></td>
+                <td>{{x.titulo}}</td>
+                <td>${{x.precio}}</td>
+                <td>{{x.tecnica.descripcion}}</td>
+                <td><a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#VerMas{{ x.id }}" >Ver mas</a></td>
+                <td class="text-center">
+                  <a class="btn btn-danger mt-2" onclick="confirmarEliminar({{x.id}})">Eliminar</a>
+                </td>
+              </tr>
+              <div class="modal" id="VerMas{{x.id}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">{{x.titulo}}</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+              
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="">
+                          <hr>
+                          <h5>Descripcion:</h5>
+                          <p class="form-label">{{x.descripcion}}</p>
+                          <hr>
+                          <hr>
+                          <h5>Historia:</h5>
+                          <p class="form-label">{{x.historia}}</p>
+                          <hr>
+                    </div>
+              
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+              
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              
+            </tbody>
+  
+          </table>
+
+        </div>    
+      </div>
+      <script>
+        function confirmarEliminar(id) {
+  Swal.fire({
+      title: "Estas seguro?",
+      text: "Esto no se puede revertir!",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, elimina!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Eliminado!",
+          text: "Fue eliminado correctamente.",
+          icon: "success"
+        }).then(function(){
+          const baseUrl = window.location.origin; // Obtiene la dirección base (ejemplo: http://127.0.0.1:8000)
+          const newUrl = `${baseUrl}/eliminar/${id}/`; // Construir la nueva URL
+          window.location.href = newUrl;  
+        });
+      }
+    });
+}
+      </script>
+{% endblock %}

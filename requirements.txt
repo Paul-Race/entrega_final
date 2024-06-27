@@ -1,0 +1,14 @@
+django
+django-admin-interface
+django_crispy_forms
+crispy_bootstrap4
+pillow
+psycopg2
+djangorestframework
+requests
+django-admin-confirm 
+django-axes 
+django-simple-captcha
+django-recaptcha
+django-multi-captcha-admin
+reportlab

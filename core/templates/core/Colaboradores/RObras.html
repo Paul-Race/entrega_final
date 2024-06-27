@@ -1,0 +1,102 @@
+{% extends 'core/Colaboradores/layout_crud.html' %}
+{% block body %}
+    <div class="container mt-3 pb-3">
+        <h1 class="text-center my-2">Obras publicadas</h1>       
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Historia</th>
+              <th>Precio</th>
+              <th>Técnica</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for x in obras %}
+            <tr>
+              {% if x.imagen %}
+              <td><img width="100px" height="100px" src="{{ x.imagen.url }}"></td>
+              {% else %}
+              <td><img src="https://via.placeholder.com/100"></td>
+              {%endif%}
+              <td>{{x.titulo}}</td>
+              <td>{{x.descripcion}}</td>
+              <td>{{x.historia}}</td>
+              <td>${{x.precio}}</td>
+              <td>{{x.tecnica.descripcion}}</td>
+              <td class="text-center">
+                <a class="btn btn-primary mt-2" href="{% url 'UDObras' x.id %}">Actualizar</a>
+                <a class="btn btn-danger mt-2" onclick="confirmarEliminar({{x.id}})">Eliminar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <script>
+          function confirmarEliminar(id) {
+    Swal.fire({
+        title: "Estas seguro?",
+        text: "Esto no se puede revertir!",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, elimina!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Fue eliminado correctamente.",
+            icon: "success"
+          }).then(function(){
+          const baseUrl = window.location.origin; // Obtiene la dirección base (ejemplo: http://127.0.0.1:8000)
+          const newUrl = `${baseUrl}/DObras/${id}/`; // Construir la nueva URL
+          window.location.href = newUrl; 
+          });
+        }
+      });
+}
+        </script>
+      </div>
+    <div class="modal" id="Contacto">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Contacta a soporte</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Person</span>
+                        <input type="text" class="form-control" placeholder="First Name">
+                        <input type="text" class="form-control" placeholder="Last Name">
+                      </div>
+                    <div class="mb-3 mt-3">
+                      <label for="email" class="form-label">Email:</label>
+                      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                    </div>
+                    <label for="comment">Comments:</label>
+                    <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                  </form>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}

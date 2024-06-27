@@ -1,0 +1,82 @@
+{% extends 'core/Admin/layout_base_admin.html' %}
+{% block body %}
+<div class="container mt-5">
+    <div class="row py-3 text-center">
+        <div class="col-md-4">
+            <div class="alert alert-info">
+                <strong>Total vendido</strong> <br> ${{total_dinero}}USD
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="alert alert-info">
+                <strong>Ventas totales</strong> <br> {{total_ventas}}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="alert alert-info">
+                <strong>Promedio por venta</strong> <br> {{promedio_por_venta}}
+            </div>
+        </div>
+
+    </div>
+    <div class="row py-3">
+        <div class="col-lg-4">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="col-lg-8">
+            <canvas  id="myChart2"></canvas>
+        </div>
+    </div>
+</div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Pintura', 'Escultura', 'Ceramica'],
+        datasets: [{
+          label: 'Ventas por categoria',
+          data: [{{conteo_pintura}}, {{conteo_escultura}}, {{conteo_ceramica}}],
+          borderWidth: 1
+        }]
+      },
+
+    });
+  </script>
+  <script>
+    const ctx2 = document.getElementById('myChart2');
+  
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels:
+        [
+        {% for x in usuarios %}
+            '{{x.username}}',
+        {% endfor %}
+        ],
+        datasets: [{
+          label: 'Obras vendidas',
+          data: [
+            {% for x in colaboradores %}
+            {{x.total_vendido}},
+            {% endfor %}
+        ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}

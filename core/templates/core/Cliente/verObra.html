@@ -1,0 +1,33 @@
+{% extends 'core/Cliente/layout_base_cli.html' %}
+{% load humanize %}
+{% block body %}
+<div class="container">
+    <section>
+        <div class="row">
+            <h3 class="text-center">{{obra.titulo}}</h3>
+            <div class="col-md-6">
+                <img class="d-block img-fluid mx-auto my-3" width="450px" src="{{ obra.imagen.url }}" >
+            </div>
+            <div class="col-md-6 mt-5">
+                <h5>Descripción: </h5>
+                <p>{{obra.descripcion}}</p>
+                <h5>Historia: </h5>
+                <p>{{obra.historia}}</p>
+                <h5>Precio: </h5>
+                <p>$ {{obra.precio|intcomma}}</p>
+                <h5>Técnica: </h5>
+                <p>{{obra.tecnica}}</p>
+                {% if user.is_authenticated %}
+                <a class="bi bi-cart-plus btn btn-success" href="{% url 'agregarCarrito' obra.id %}#section2"> Agregar al carrito</a>
+                {% else %}
+                <h5 class="alert alert-danger text-center">Para comprar debes iniciar sesión</h5>
+                <div class="d-flex justify-content-center my-5">
+                    <a class="btn btn-success text-center bi bi-person-fill-add" href="{% url 'login' %}"> Log in</a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock %}
