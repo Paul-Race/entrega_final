@@ -9,10 +9,6 @@
         {
             "src": "/(.*)",
             "dest": "GroundZero/wsgi.py"
-        },
-        {
-          "src": "/static/(.*)",
-          "dest": "/staticfiles/$1"
         }
     ]
   }
