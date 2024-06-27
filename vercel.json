@@ -1,0 +1,11 @@
+{
+    "builds": [{
+        "src": "GroundZero/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambs¿daSize": "15mb", "runtime": "python3.9" }
+    }],
+    "routes": [{
+        "src": "/(.*)",
+        "dest": "GroundZero/wsgi.py"
+    }]
+}
