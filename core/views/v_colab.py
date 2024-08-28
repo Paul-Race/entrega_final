@@ -21,8 +21,6 @@ def colab_required(view_func):
 
     return _wrapped_view
 
-
-
 @login_required
 @colab_required
 def CObras(request):
