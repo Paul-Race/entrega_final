@@ -129,13 +129,13 @@ def pagarCarrito(request, total):
     lista_obras = []
     lista_precio = []
     for obra in obras:
+        compra.save()
         compra.obras.add(obra)
         obra.fue_comprado = True
         obra.cliente = request.user
         obra.save()
         lista_obras.append(obra.titulo)
         lista_precio.append(obra.precio)
-    compra.save()
     mensaje = ""
     for x in range(len(lista_obras)):
         mensaje += f"Nombre: {lista_obras[x]} Precio: ${lista_precio[x]} "
